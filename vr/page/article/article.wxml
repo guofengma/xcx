@@ -1,0 +1,34 @@
+<view class="page">
+
+  <view class="page__bd">
+    <view class="weui-article">
+      <view class="weui-article__h1">{{title}}</view>
+      <view class="weui-article__section">
+
+        <view class="weui-article__section">
+          <view class="weui-article__h3">虚拟现实技术究竟指什么？ 本文将为读者解决这个困惑。
+          </view>
+          <view class="weui-article__p">
+            <image class="weui-article__img" src="/images/1-1.jpg" mode="aspectFit" style="height: 180px;width:100%" />
+          </view>
+          <view class="weui-article__p">
+            虚拟现实技术简介
+          </view>
+          <view class="weui-article__p">
+            什么是虚拟现实技术
+          </view>
+          <view class="weui-article__p">
+            {{title}}
+          </view>
+
+        </view>
+        <view class="weui-article__section">
+          <view class="weui-article__h3"> 虚拟现实技术特征</view>
+          <view class="weui-article__p">
+            虚拟现实技术主要有四个特征: (1) 沉浸性：主要是指让计算机产生一种虚拟的环境, 让参与到其中的人有一种和现实世界一样的感觉, 就如身临其境一般。 (2) 交互性:主要是指用户对计算机模拟出的虚拟环境中的物体得到反馈。 (3) 想象力：主要是指虚拟现实技术它具有很广阔的想象空间。不仅可以模拟出现实存在的世界，而且还可以虚拟出不存在的环境。 (4) 多感知性：主要是指这项技术不仅能够然我们感到视觉和听觉这两种一般计算机就可以给我们提供的感觉外，还可以给我们提供触觉、味觉等一般计算机难以模拟的感觉。
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
