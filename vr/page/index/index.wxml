@@ -5,9 +5,9 @@
   </view>
   <view class="page__bd">
     <view class="weui-panel weui-panel_access">
-      <view class="weui-panel__hd">VR文章列表</view>
+      <view class="weui-panel__hd">VR栏目</view>
       <view class="weui-panel__bd">
-        <navigator url="/page/article/article?id=1" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+        <!-- <navigator url="/page/article/article?id=1" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
           <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
             <image class="weui-media-box__thumb" src="/images/1.jpg" />
           </view>
@@ -15,7 +15,7 @@
             <view class="weui-media-box__title">下面的都是胡扯</view>
             <view class="weui-media-box__desc">哈哈哈</view>
           </view>
-        </navigator>
+        </navigator> -->
 
 
         <navigator url="/page/list/list?id={{item.id}}&title={{item.name}}" wx:for="{{list}}" wx:key="list" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
