@@ -16,8 +16,6 @@
             <view class="weui-media-box__desc">哈哈哈</view>
           </view>
         </navigator> -->
-
-
         <navigator url="/page/list/list?id={{item.id}}&title={{item.name}}" wx:for="{{list}}" wx:key="list" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
           <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
             <image class="weui-media-box__thumb" src="{{item.thumbnail}}" />
@@ -28,8 +26,6 @@
           </view>
         </navigator>
 
-
-
       </view>
       <!-- <view class="weui-panel__ft">
                 <view class="weui-cell weui-cell_access weui-cell_link">
@@ -38,78 +34,6 @@
                 </view>
             </view> -->
     </view>
-    <!-- <view class="weui-panel weui-panel_access">
-            <view class="weui-panel__hd">文字组合列表</view>
-            <view class="weui-panel__bd">
-                <view class="weui-media-box weui-media-box_text">
-                    <view class="weui-media-box__title weui-media-box__title_in-text">标题一</view>
-                    <view class="weui-media-box__desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。</view>
-                </view>
-                <view class="weui-media-box weui-media-box_text">
-                    <view class="weui-media-box__title weui-media-box__title_in-text">标题二</view>
-                    <view class="weui-media-box__desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。</view>
-                </view>
-            </view>
-            <view class="weui-panel__ft">
-                <view class="weui-cell weui-cell_access weui-cell_link">
-                    <view class="weui-cell__bd">查看更多</view>
-                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-                </view>
-            </view>
-        </view> -->
-
-    <!-- <view class="weui-panel">
-            <view class="weui-panel__hd">文字列表附来源</view>
-            <view class="weui-panel__bd">
-                <view class="weui-media-box weui-media-box_text">
-                    <view class="weui-media-box__title weui-media-box__title_in-text">标题一</view>
-                    <view class="weui-media-box__desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。</view>
-                    <view class="weui-media-box__info">
-                        <view class="weui-media-box__info__meta">文字来源</view>
-                        <view class="weui-media-box__info__meta">时间</view>
-                        <view class="weui-media-box__info__meta weui-media-box__info__meta_extra">其它信息</view>
-                    </view>
-                </view>
-            </view>
-        </view> -->
+   
   </view>
 </view>
-
-
-
-
-
-<!-- 
-
-
-<view class="page">
-    <view class="page__hd">
-        <view class="page__title">WeUI</view>
-        <view class="page__desc">WeUI 是一套同微信原生视觉体验一致的基础样式库，由微信官方设计团队为微信内网页和微信小程序量身设计，令用户的使用感知更加统一。</view>
-    </view>
-    <view class="page__bd page__bd_spacing">
-        <view class="kind-list">
-            <block wx:for="{{list}}" wx:key="id">
-                <view class="kind-list__item">
-                    <view id="{{item.id}}" class="weui-flex kind-list__item-hd {{item.open ? 'kind-list__item-hd_show' : ''}}" bindtap="kindToggle">
-                        <view class="weui-flex__item">{{item.name}}</view>
-                        <image class="kind-list__img" src="images/icon_nav_{{item.id}}.png"></image>
-                    </view>
-                    <view class="kind-list__item-bd {{item.open ? 'kind-list__item-bd_show' : ''}}">
-                        <view class="weui-cells {{item.open ? 'weui-cells_show' : ''}}">
-                            <block wx:for="{{item.pages}}" wx:for-item="page" wx:key="*this">
-                                <navigator url="{{page}}/{{page}}" class="weui-cell weui-cell_access">
-                                    <view class="weui-cell__bd">{{page}}</view>
-                                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-                                </navigator>
-                            </block>
-                        </view>
-                    </view>
-                </view>
-            </block>
-        </view>
-    </view>
-    <view class="page__ft">
-        <image src="images/icon_footer.png" style="width: 84px; height: 19px;"></image>
-    </view>
-</view> -->

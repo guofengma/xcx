@@ -1,3 +1,6 @@
+.ziti{
+  font-size: 22px;
+}
 .art-header{
     position: relative;
     width: 100%;

@@ -11,15 +11,15 @@ Page({
     var that = this
     this.title = options.title
     wx.request({
-      url: 'https://oa.yudw.com/vr/api/list.php?id=' + options.id,
+      url: 'https://oa.yudw.com/vr/index.php?m=home&c=api&a=article&tid=' + options.id,
       headers: {
         'Content-Type': 'application/json'
       },
       success: function (res) {
          that.setData({
-           list: res.data.stories
+           list: res.data
          })
-         console.log(res.data)
+        // console.log(res.data)
       }
     })
   }

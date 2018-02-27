@@ -2,27 +2,22 @@
 
   <view class="page__bd">
     <view class="weui-article">
-      <view class="weui-article__h1">{{art.title}}</view>
+      <view class="weui-article__h1 ziti">{{art.title}}</view>
       <view class="weui-article__section">
 
         <view class="weui-article__section">
           <!-- <view class="weui-article__h3">虚拟现实技术究竟指什么？ 本文将为读者解决这个困惑。
           </view> -->
-          
-          <!-- <view class="weui-article__p">
-            <image class="weui-article__img" src="/images/1-1.jpg" mode="aspectFit" style="height: 180px;width:100%" />
-          </view> -->
-         
-         
+
           <view class="weui-article__p">
-            {{art.image_source}}
+            <image class="weui-article__img" src="{{art.image_source}}" mode="aspectFit" style="width:100%" />
           </view>
-           <view class="weui-article__p">
-            {{art.body}}
+
+          <view class="weui-article__p">
+            <text>{{art.body}}</text>
           </view>
 
         </view>
-      
       </view>
     </view>
   </view>
