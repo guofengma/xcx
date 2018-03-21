@@ -6,8 +6,27 @@ var SESSION_KEY = ''//储存获取到session_key
 const app = getApp()
 
 
-
 Page({
-
+  data: {
+    list: {}
+  },
   
+  onLoad: function (options) {
+    var that = this;
+    
+    var uid = wx.getStorageSync('uid');
+
+    wx.request({
+      url: 'https://oa.yudw.com/index.php?m=lang&c=index&a=history&uid=' + uid,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        that.setData({
+          list: res.data
+        })
+        // console.log(res.data)
+      }
+    })
+  }
 })

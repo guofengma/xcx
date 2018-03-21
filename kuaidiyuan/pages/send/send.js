@@ -11,7 +11,7 @@ Page({
 
   onLoad: function () {
     var uid = wx.getStorageSync('uid');
-    console.log(uid);
+   
     //一加载就调用
 
     this.getkuaidi();
@@ -206,10 +206,11 @@ Page({
     if (!(/^1[34578]\d{9}$/.test(formData.num))) {
       this.showTopTips("手机号码不正确");
       return false;
-    }
-
+    };
+    var uid = wx.getStorageSync('uid');
     wx.request({
-      url: 'https://oa.yudw.com/index.php?m=lang&c=index&a=send',
+      
+      url: 'https://oa.yudw.com/index.php?m=lang&c=index&a=send&uid='+uid,
       data: formData,
       header: {
         'Content-Type': 'application/json'
@@ -218,7 +219,7 @@ Page({
 
         console.log(res.data);
         if (res.data == "OK") {
-          console.log("发送成功");
+          console.log("发送成功"+uid);
           that.setValue();
         } else {
           that.showTopTips(res.data);
