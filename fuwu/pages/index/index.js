@@ -93,7 +93,7 @@ Page({
       success: function (res) {
        // console.log(res.code);
         wx.request({
-          url: 'https://oa.yudw.com/index.php?m=lang&c=index&a=getuid',
+          url: 'https://api.c3w.cc/lang/index/getuid',
           data: {
             appid: APP_ID,
             secret: APP_SECRET,

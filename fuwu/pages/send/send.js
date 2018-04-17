@@ -75,7 +75,7 @@ Page({
     var that = this;
     //去获取快递种类
     wx.request({
-      url: 'https://oa.yudw.com/index.php?m=lang&c=index&a=kd',
+      url: 'https://api.c3w.cc/lang/index/kd',
       header: {
         'Content-Type': 'application/json'
       },
@@ -129,7 +129,7 @@ Page({
     }
 
     wx.request({
-      url: 'https://oa.yudw.com/index.php?m=lang&c=index&a=send',
+      url: 'https://api.c3w.cc/lang/index/send',
       data: formData,
       header: {
         'Content-Type': 'application/json'
@@ -210,7 +210,7 @@ Page({
     var uid = wx.getStorageSync('uid');
     wx.request({
       
-      url: 'https://oa.yudw.com/index.php?m=lang&c=index&a=send&uid='+uid,
+      url: 'https://api.c3w.cc/lang/index/send?uid='+uid,
       data: formData,
       header: {
         'Content-Type': 'application/json'
