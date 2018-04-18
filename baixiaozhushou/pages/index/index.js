@@ -12,6 +12,7 @@ Page({
   data: {
     motto: '开始发送',
     shop:'进入商城',
+    login:'登录',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
@@ -28,6 +29,13 @@ Page({
   sendmsg: function () {
     wx.navigateTo({
       url: '../send/send'
+    })
+  },
+
+  //事件处理函数
+  login: function () {
+    wx.navigateTo({
+      url: '../login/login'
     })
   },
 

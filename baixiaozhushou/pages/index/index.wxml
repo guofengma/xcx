@@ -15,8 +15,12 @@
       <view class="page__desc center">快递员助手小程序</view>
   </view>
 
-    <view class="page__bd page__bd_spacing" bindtap="sendmsg">
+    <!-- <view class="page__bd page__bd_spacing" bindtap="sendmsg">
           <button class="weui-btn" type="primary">{{motto}}</button>
+    </view> -->
+
+    <view class="page__bd page__bd_spacing" bindtap="login">
+          <button class="weui-btn" type="primary">{{login}}</button>
     </view>
 
     <!-- <view class="page__bd page__bd_spacing" bindtap="toshop">
