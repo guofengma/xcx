@@ -7,7 +7,7 @@ const app = getApp()
 
 var interval = null //倒计时函数
 var flag = true
-var tempmobile = ""
+
 
 Page({
 
@@ -25,7 +25,7 @@ Page({
 
   data: {
     showTopTips: false,
-    showcode: "hide",
+    showcode: "",
     //hide：隐藏
     time: '获取验证码', //倒计时 
     currentTime: 60
@@ -34,18 +34,25 @@ Page({
   mobileInputEvent:function(e){
     console.log(e);
     
-    tempmobile = e.detail.value;
-   
+    var tempmobile = e.detail.value;
+    
     if(tempmobile.length != 11){
       this.showTopTips("手机号码不正确");
       return false;
     }
 
+    //储存
+    wx.setStorageSync('tempmobile', tempmobile);
+
     console.log(tempmobile);
  },
 
   getCode: function (options) {
-    var mobile = tempmobile;
+    var mobile = wx.getStorageSync('tempmobile');
+    if (!mobile){
+      that.showTopTips("手机号码不能为空");
+      return false;
+    }
 
     var that = this;
     var currentTime = that.data.currentTime
@@ -122,7 +129,10 @@ Page({
     var uid = wx.getStorageSync('uid');
 
     var that = this;
-   
+   console.log(code);
+   console.log(uid);
+   console.log(mobile);
+
     wx.request({
       url: 'https://api.c3w.cc/index.php?m=send&c=index&a=check',
       data: {

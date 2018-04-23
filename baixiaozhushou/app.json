@@ -6,6 +6,7 @@
     "pages/history/history",
     "pages/shop/shop",
     "pages/login/login"
+   
   ],
   "window":{
     "backgroundTextStyle":"light",
