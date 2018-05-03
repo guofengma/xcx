@@ -10,7 +10,7 @@ Page({
   onLoad (options) {
     var that = this
     wx.request({
-      url: 'https://oa.yudw.com/vr/index.php?m=home&c=api&a=detail&id=' + options.id,
+      url: 'https://api.c3w.cc/vr/api/detail?id=' + options.id,
       headers: {
         'Content-Type': 'application/json'
       },

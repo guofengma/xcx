@@ -3,6 +3,8 @@ const APP_SECRET = 'cad42e76b18a5854f201b7ebceb024f4';//输入小程序app_secre
 var OPEN_ID = ''//储存获取到openid  
 var SESSION_KEY = ''//储存获取到session_key  
 
+var server = require('../../utils/server');
+
 const app = getApp()
 
 var interval = null //倒计时函数
@@ -12,18 +14,25 @@ var flag = true
 Page({
 
   onLoad:function(){
+    var that = this;
+    var openId = getApp().globalData.openid;
+    server.getJSON("/User/validateOpenid", { openid: openId }, function (res) {
+      if (res.data.code == 200) {
+        var mobile =  res.data.data.mobile;
+      }
 
-    var mobile = wx.getStorageSync('mobile');
-    //取出mobile，如果存在直接跳转
-    if (mobile){
-      wx.navigateTo({
-        url: '../send/send'
-      })
-    }
+      if (mobile) {
+        wx.navigateTo({
+          url: '../send/send'
+        })
+      }
+      
+    });
 
   },
 
   data: {
+  
     showTopTips: false,
     showcode: "",
     //hide：隐藏

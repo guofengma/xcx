@@ -1,7 +1,7 @@
 <view class="page">
   <view class="page__hd">
-    <view class="page__title">这里是VR大视界</view>
-    <view class="page__desc">欢迎欢迎</view>
+    <view class="page__title">VR大视界</view>
+    <view class="page__desc">毕业设计作品</view>
   </view>
   <view class="page__bd">
     <view class="weui-panel weui-panel_access">

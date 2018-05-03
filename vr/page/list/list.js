@@ -11,7 +11,7 @@ Page({
     var that = this
     this.title = options.title
     wx.request({
-      url: 'https://oa.yudw.com/vr/index.php?m=home&c=api&a=article&tid=' + options.id,
+      url: 'https://api.c3w.cc/vr/api/article?tid=' + options.id,
       headers: {
         'Content-Type': 'application/json'
       },

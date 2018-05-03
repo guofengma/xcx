@@ -1,189 +1,317 @@
-
-const APP_ID = 'wx2c985a73e416f727';//输入小程序appid  
-const APP_SECRET = 'cad42e76b18a5854f201b7ebceb024f4';//输入小程序app_secret  
-var OPEN_ID = ''//储存获取到openid  
-var SESSION_KEY = ''//储存获取到session_key  
-
-//index.js
-//获取应用实例
-const app = getApp()
-
+var server = require('../../utils/server');
+var QQMapWX = require('../../utils/qqmap-wx-jssdk.js');
+var seat;
+var isLoc = false;
 Page({
   data: {
-    motto: '开始发送',
-    shop: '进入商城',
-    login: '登录',
-    userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    "address": "定位中",
+    banner: [],
+    goods: [],
+    bannerHeight: Math.ceil(290.0 / 750.0 * getApp().screenWidth)
   },
-
-  //事件处理函数
-  bindViewTap: function () {
-   this.login();
-  },
-
-  //事件处理函数
-  sendmsg: function () {
+  showLogin: function (e) {
     wx.navigateTo({
-      url: '../send/send'
+      url: '../login/login',
+      success: function (res) {
+        // success
+      },
+      fail: function () {
+        // fail
+      },
+      complete: function () {
+        // complete
+      }
     })
   },
+  
+  showKuaidi: function (e) {
+    wx.navigateTo({
+      url: '../kuaidi/index',
+      success: function (res) {
+        // success
+      },
+      fail: function () {
+        // fail
+      },
+      complete: function () {
+        // complete
+      }
+    })
+  },
+  showHistory: function (e) {
+    wx.navigateTo({
+      url: '../history/history',
+      success: function (res) {
+        // success
+      },
+      fail: function () {
+        // fail
+      },
+      complete: function () {
+        // complete
+      }
+    })
+  },
+  showIndex: function (e) {
+    wx.navigateTo({
+      url: '../kuaidi/index',
+      success: function (res) {
+        // success
+      },
+      fail: function () {
+        // fail
+      },
+      complete: function () {
+        // complete
+      }
+    })
+  },
+  showMine: function (e) {
+    wx.switchTab({
+      url: "../member/index/index"
+    });
+  },
+  showShare: function (e) {
+    wx.navigateTo({
+      url: "../member/share/index/index"
+    });
+  },
 
-  //事件处理函数
-  login: function () {
-    var mobile = wx.getStorageSync('mobile');
-    if (mobile) {
-      //存在，直接进入
-      wx.navigateTo({
-        url: '../send/send'
-      })
-    } else {
-      //不存在，去登录
-      wx.navigateTo({
-        url: '../login/login'
+  showSeller: function (e) {
+    wx.switchTab({
+      url: '../seller/index'
+    })
+  },
+  search: function (e) {
+    wx.navigateTo({
+      url: "../search/index"
+    });
+  },
+  showCarts: function (e) {
+    wx.switchTab({
+      url: "../cart/cart"
+    });
+  },
+  onLoad: function (options) {
+    //seat = options.seat;
+    //wx.showToast({title:seat+"seat"});
+    //
+    //this.loadMainGoods();
+
+    //弹窗提醒来自用户 XX 的分享
+    this.getInviteCode(options);
+
+    var app = getApp();
+    app.getOpenId(function () {
+
+      var openId = getApp().globalData.openid;
+
+  console.log(openId);
+
+      server.getJSON("/User/validateOpenid", { openid: openId }, function (res) {
+
+        if (res.data.code == 200) {
+          getApp().globalData.userInfo = res.data.data;
+          getApp().globalData.login = true;
+          //wx.switchTab({
+          //url: '/pages/index/index'
+          //});
+        }
+        else {
+          if (res.data.code == '400') {
+            console.log("need register");
+
+            app.register(function () {
+              getApp().globalData.login = true;
+            });
+          }
+        }
+
+      });
+
+    });
+  },
+
+  getInviteCode: function (options) {
+
+    if (options.uid != undefined) {
+      //去请求分销关系接口
+      this.distribution(options.uid);
+
+      wx.showToast({
+        title: '来自用户:' + options.uid + '的分享',
+        icon: 'success',
+        duration: 2000
       })
     }
 
+    if (options.scene != undefined) {
+      //去请求分销关系接口
+      this.distribution(options.scene);
+
+      wx.showToast({
+        title: '来自用户:' + options.scene + '的分享',
+        icon: 'success',
+        duration: 2000
+      })
+    }
+
+
   },
 
-  //进入商城
-  toshop: function () {
-    wx.navigateTo({
-      url: '../shop/shop'
-    })
+  //分销关系接口
+  distribution: function (first_leader) {
+    var user_id = wx.getStorageSync('user_id');
+    console.log("用户：" + user_id + "的上级是：" + first_leader);
+    if (first_leader != undefined) {
+      setTimeout(function () {
+        //要延时执行的代码  
+        server.getJSON("/User/distribution", { first_leader: first_leader, user_id: user_id }, function (res) {
+          console.log(res.data.msg);
+        })
+      }, 4000)
+      //延迟时间 这里是4秒  
+    }
   },
 
-  onLoad: function () {
+  loadBanner: function () {
+    var that = this;
+    var city = that.data.address;
 
-    //获取用户信息
-    wx.getUserInfo({
-      success: res => {
-        app.globalData.userInfo = res.userInfo
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-        console.log(res.userInfo);
-        //这里去登录
-        var uid = this.getuid();
-        console.log(uid);
-      },
-      fail: res => {
-        console.log("拒绝");
-        //停止服务
-        wx.showModal({
-          title: '警告',
-          content: '您点击了拒绝授权，将无法正常使用的功能体验。请10分钟后再次点击授权，或者删除小程序重新进入。',
-          success: function (res) {
-            if (res.confirm) {
-              console.log('用户点击确定')
-            }
-          }
-        })
-      }
+    city = encodeURI(city);
+    server.getJSON("/Index/home", { city: that.data.address }, function (res) {
+      var banner = res.data.result.ad;
+      var goods = res.data.result.goods;
+      var ad = res.data.ad;
+      that.setData({
+        banner: banner,
+        goods: goods,
+        ad: ad
+      });
     });
 
-
-    var uid = wx.getStorageSync('uid');
-
-    if (uid == "" || uid.length > 30) {
-      //如果存储为空
-      uid = this.getuid();
-      //uid = wx.getStorageSync('uid');
-    }
-
-    console.log(uid);
-
-    if (app.globalData.userInfo) {
-      console.log(app.globalData.userInfo);
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse) {
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        //console.log(res);
-        // console.log(res.encryptedData);
-        // console.log(res.iv);
-        //不调用了，用其他方法
-        //this.getunionid(res.encryptedData, res.iv);
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
-      })
-    }
-
-
   },
-
-  getUserInfo: function (e) {
-    //console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
-  },
-
-  getuid: function () {
+  loadMainGoods: function () {
     var that = this;
-    wx.login({
-      success: function (res) {
-        wx.request({
-          url: 'https://api.c3w.cc/index.php?m=lang&c=index&a=getuid',
-          data: {
-            appid: APP_ID,
-            secret: APP_SECRET,
-            js_code: res.code,
-            grant_type: 'authorization_code'
-          },
-          method: 'GET',
-          success: function (res) {
-            var uid = res.data;
-            wx.setStorageSync('uid', uid);
-            //再去取mobile
-            that.getmobile(uid);
+    var query = new AV.Query('Goods');
+    query.equalTo('isHot', true);
+    query.find().then(function (goodsObjects) {
+      that.setData({
+        goods: goodsObjects
+      });
+    });
+  },
+  onShow: function () {
+    var app = getApp();
+    var self = this;
 
-            return uid;
+    if (isLoc) {
+      var address = getApp().globalData.city;
+      this.setData({ address: address });
+      self.loadBanner();
+      return;
+    }
+    wx.getLocation({
+      type: 'gcj02',
+      success: function (res) {
+        var latitude = res.latitude;
+        var longitude = res.longitude;
+
+        app.globalData.lat = latitude;
+        app.globalData.lng = longitude;
+
+        // 实例划API核心类
+        var map = new QQMapWX({
+          key: 'ORXBZ-YWJ3X-ZTP4D-7IRW5-F7L7T-2SBXX' // 必填
+        });
+        //address: res.result.address_component.city
+        // 调用接口
+        map.reverseGeocoder({
+          location: {
+            latitude: latitude,
+            longitude: longitude
+          },
+          success: function (res) {
+            console.log(res);
+
+            if (res.result.ad_info.city != undefined) {
+              self.setData({
+
+                address: res.result.ad_info.city
+              });
+              getApp().globalData.city = res.result.ad_info.city;
+              isLoc = true;
+              self.loadBanner();
+            }
+          },
+          fail: function (res) {
+            console.log(res);
+          },
+          complete: function (res) {
+            console.log("地址获取完成");
+            //console.log(res);
           }
-        })
+        });
       }
     })
-  },
 
-  getmobile: function (uid) {
-    if (!uid){
-      console.log("UID不存在")
+
+
+  },
+  clickBanner: function (e) {
+
+    var goodsId = e.currentTarget.dataset.goodsId;
+    wx.navigateTo({
+      url: "../goods/detail/detail?objectId=" + goodsId
+    });
+  },
+  clickBanner: function (e) {
+
+    var goodsId = e.currentTarget.dataset.goodsId;
+    wx.navigateTo({
+      url: "../goods/detail/detail?objectId=" + goodsId
+    });
+  },
+  showDetail: function (e) {
+    var goodsId = e.currentTarget.dataset.goodsId;
+    wx.navigateTo({
+      url: "../goods/detail/detail?objectId=" + goodsId
+    });
+  },
+  showCategories: function () {
+    // wx.navigateTo({
+    // 	url: "../category/category"
+    // });
+    wx.switchTab({
+      url: "../category/category"
+    });
+  },
+  showGroupList: function () {
+    wx.navigateTo({
+      url: "../goods/grouplist/list"
+    });
+  },
+  onShareAppMessage: function () {
+    var user_id = getApp().globalData.user_id;
+    console.log(user_id);
+    return {
+      title: '百校商城',
+      desc: '百所高校本地化商城，一站式服务平台',
+      path: '/pages/index/index?scene=' + user_id
     }
-    wx.request({
-      url: 'https://api.c3w.cc/index.php?m=lang&c=index&a=getmobile',
-      data: {
-        uid: uid
-      },
-      method: 'GET',
+  },
+  select: function () {
+    wx.navigateTo({
+      url: '../switchcity/switchcity',
       success: function (res) {
-        if(res.data.sign == 1){
-          wx.setStorageSync('mobile', res.data.code);
-        }
-        console.log(res.data.code)
-      
+        // success
+      },
+      fail: function (res) {
+        // fail
+      },
+      complete: function (res) {
+        // complete
       }
     })
   }
-
 })

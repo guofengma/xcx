@@ -5,7 +5,8 @@
     "pages/send/send",
     "pages/history/history",
     "pages/shop/shop",
-    "pages/login/login"
+    "pages/login/login",
+    "pages/kuaidi/index"
    
   ],
   "window":{
